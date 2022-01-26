@@ -2,6 +2,7 @@
 
 ![License](https://badgen.net/github/license/cheap-glitch/toki?color=green)
 ![Latest release](https://badgen.net/github/release/cheap-glitch/toki?color=green)
+[![Coverage status](https://coveralls.io/repos/github/cheap-glitch/toki/badge.svg?branch=main)](https://coveralls.io/github/cheap-glitch/toki?branch=main)
 
 **toki**  ([時](https://jisho.org/search/%E6%99%82)) is  a  Bash wrapper  around
 `timew`, the [Timewarrior](https://timewarrior.net) CLI.

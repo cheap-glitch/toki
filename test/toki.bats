@@ -30,11 +30,19 @@ setup() {
 
 	run toki help cut
 	assert_success
-	assert_output --partial 'timew-cut'
+	assert_output --partial 'timew-cut -'
 
 	run toki help switch
 	assert_success
-	assert_output --partial 'timew-cut'
+	assert_output --partial 'timew-switch -'
+
+	run toki-cut --help
+	assert_success
+	assert_output --partial 'timew-cut -'
+
+	run toki-switch --help
+	assert_success
+	assert_output --partial 'timew-switch -'
 
 } # }}}
 
