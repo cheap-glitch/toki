@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+set -eu -o pipefail
+shopt -u expand_aliases
+IFS=$'\n\t'
+
+if [[ "${1:-}" == '--help' ]]; then
+	cat <<- END
+	NAME
+	       timew-switch - cut the current interval (see timew-cut) and starts another
+
+	SYNOPSIS
+	       timew switch [<date>] [<tag>...]
+
+	DESCRIPTION
+	       Shortcut commands that combines 'cut' and 'start'.
+
+	SEE ALSO
+	       timew-cut, timew-start, timew-continue
+	END
+	exit 0
+fi
+
+timew cut
+timew start "${@}"

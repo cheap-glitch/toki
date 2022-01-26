@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+set -eu -o pipefail
+shopt -u expand_aliases
+IFS=$'\n\t'
+
+if [[ "${1:-}" == '--help' ]]; then
+	cat <<- END
+	NAME
+	       timew-cut - stop tracking and truncate the stopped interval to the closest minute
+
+	SYNOPSIS
+	       timew cut [<date>] [<tag>...]
+
+	DESCRIPTION
+	       Acts exactly like timew-stop, with the addition that the stopped interval is automatically
+	       shortened so its duration in minutes is an integer.
+
+	       This allows for a more precise tally of short, repeated intervals that have the same tags.
+
+	SEE ALSO
+	       timew-stop, timew-cancel
+	END
+	exit 0
+fi
+
+if [[ $(timew get dom.active || true) -eq 0 ]]; then
+	echo 'There is no active time tracking.'; exit 1
+fi
+
+total_time="$(timew stop "${@}" | tail --lines=1 | tr --squeeze-repeats ' ' | cut --delimiter=: --field=3)"
+if [[ "${total_time}" != '00' ]]; then
+	timew shorten @1 "${total_time}seconds" >/dev/null
+fi

@@ -1,0 +1,124 @@
+#!/usr/bin/env bash
+#
+# toki
+#
+# Copyright (c) 2022-present, cheap glitch
+# This software is distributed under the ISC license
+
+set -eu -o pipefail
+shopt -u expand_aliases
+IFS=$'\n\t'
+
+shift_args() {
+	unset 'args[0]'
+}
+
+custom_command_exists() {
+	if command -v "toki-${1}" &>/dev/null; then
+		echo "toki-${1}"
+	elif command -v "timew-${1}" &>/dev/null; then
+		echo "timew-${1}"
+	else
+		exit 1
+	fi
+}
+
+# Print a detailed summary by default
+if [[ ${#} -eq 0 ]]; then
+	timew || true
+	timew summary :ids
+	exit 0
+fi
+
+# Extend the built-in help
+if [[ "${1}" == 'help' ]]; then
+	# shellcheck disable=SC2310,SC2311
+	if [[ -z "${2:-}" ]]; then
+		cat <<- END
+			$(timew help || true)
+
+			Aliases:
+			       lengthen: +, lengthen
+			       shorten: -, reduce
+			       join: merge
+			       track: t, a, add, record
+			       continue: restart
+			       delete: d, remove
+
+			Additional commands:
+			       timew cut [<date>] [<tag>...]
+			       timew switch [<date>] [<tag>...]
+		END
+	elif custom_command="$(custom_command_exists "${2}")"; then
+		"${custom_command}" --help | "${PAGER:-less}"
+	else
+		timew help "${2}"
+	fi
+	exit 0
+fi
+
+# Parse the command arguments
+args=()
+for arg in "${@}"; do
+	# Convert `<x>m` to `<x>minutes`
+	if [[ "${arg,,}" =~ ^[0-9]+(\.[0-9]+)?m$ ]]; then
+		args+=("${arg,,}inutes")
+		continue
+	fi
+
+	# Parse `*h*m*s` notation
+	if [[ "${arg,,}" =~ ^[0-9]+h[0-9]+m?|([0-9]+h)?[0-9]+m[0-9]+s?$ ]]; then
+		duration="${arg%%[mMsS]}"
+		if [[ "${duration,,}" == *m* ]]; then
+			args+=("PT${duration^^}S")
+		else
+			args+=("PT${duration^^}M")
+		fi
+		continue
+	fi
+
+	args+=("${arg}")
+done
+
+# Allow extending timewarrior with custom commands
+# shellcheck disable=SC2310,SC2311
+if custom_command="$(custom_command_exists "${args[0]}")"; then
+	shift_args
+	"${custom_command}" "${args[@]}"
+	exit 0
+fi
+
+# Add convenient aliases for some built-in commands
+case "${args[0]}" in
+	+|extend)       command='lengthen'   ;;
+	-|reduce)       command='shorten'    ;;
+	merge)          command='join'       ;;
+	t|a|add|record) command='track'      ;;
+	restart)        command='continue'   ;;
+	d|remove)       command='delete'     ;;
+	*)              command="${args[0]}" ;;
+esac
+shift_args
+
+# Act on the latest interval by default
+# shellcheck disable=SC2249
+case "${command}" in tag|untag|lengthen|shorten|delete)
+	has_interval=0
+	for arg in "${args[@]}"; do
+		if [[ "${arg}" =~ ^@[1-9][0-9]*$ ]]; then
+			has_interval=1; break
+		fi
+	done
+	if [[ ${has_interval} -eq 0 ]]; then
+		args+=('@1')
+	fi ;;
+esac
+
+if [[ -n "${BATS_VERSION:-}" || "$(ps --pid "${PPID}" --format cmd --no-headers || true)" == "${SHELL}" ]]; then
+	timew "${command}" "${args[@]}"
+else
+	# Send a notification when the command fails outside of a terminal
+	if ! output="$(timew "${command}" "${args[@]}" 2>&1)"; then
+		notify-send --expire-time=5000 timew "${output}"
+	fi
+fi
