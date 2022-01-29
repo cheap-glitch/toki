@@ -10,6 +10,7 @@
   },
   "scripts": {
     "coverage": "bashcov --skip-uncovered -- bats test",
+    "coverage:upload": "coveralls < .coverage/lcov.info",
     "lint": "(fd --type executable --print0; fd --extension bash --extension bats --print0) | xargs --null -- shellcheck --enable=all --external-sources",
     "lint:fix": "npm run lint -- --format=diff | git apply --unsafe-paths",
     "test": "bats test",
