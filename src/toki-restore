@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+set -eu -o pipefail
+shopt -u expand_aliases
+IFS=$'\n\t'
+
+if [[ "${1:-}" == '--help' ]]; then
+	cat <<- END
+	NAME
+	       timew-restore - resume tracking of the last interval and automatically fill the gap
+
+	SYNOPSIS
+	       timew restore
+
+	SEE ALSO
+	       timew-continue, timew-join
+	END
+	exit 0
+fi
+
+timew continue
+timew join @1 @2 >/dev/null
