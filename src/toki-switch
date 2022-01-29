@@ -20,5 +20,4 @@ if [[ "${1:-}" == '--help' ]]; then
 	exit 0
 fi
 
-timew cut
-timew start "${@}"
+toki-cut && toki start "${@}"
