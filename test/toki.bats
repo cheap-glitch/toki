@@ -51,13 +51,13 @@ setup() {
 
 @test "aliases" { # {{{
 
-	run toki extend @1 10mins
+	run toki extend @1 10minutes
 	assert_success
-	assert_output 'lengthen @1 10mins'
+	assert_output 'lengthen @1 10minutes'
 
-	run toki + @1 10mins
+	run toki + @1 10minutes
 	assert_success
-	assert_output 'lengthen @1 10mins'
+	assert_output 'lengthen @1 10minutes'
 
 	run toki merge @1 @2
 	assert_success
@@ -67,25 +67,25 @@ setup() {
 	assert_success
 	assert_output 'track tag 12:00 - 12:30'
 
-	run toki reduce @1 10mins
+	run toki reduce @1 10minutes
 	assert_success
-	assert_output 'shorten @1 10mins'
+	assert_output 'shorten @1 10minutes'
 
-	run toki - @1 10mins
+	run toki - @1 10minutes
 	assert_success
-	assert_output 'shorten @1 10mins'
+	assert_output 'shorten @1 10minutes'
 
-	run toki t tag 10mins
+	run toki t tag 10minutes
 	assert_success
-	assert_output 'track tag 10mins'
+	assert_output 'track tag 10minutes'
 
-	run toki add tag 10mins
+	run toki add tag 10minutes
 	assert_success
-	assert_output 'track tag 10mins'
+	assert_output 'track tag 10minutes'
 
-	run toki a tag 10mins
+	run toki a tag 10minutes
 	assert_success
-	assert_output 'track tag 10mins'
+	assert_output 'track tag 10minutes'
 
 	run toki remove @1
 	assert_success
@@ -103,13 +103,13 @@ setup() {
 	assert_success
 	assert_output 'delete @1'
 
-	run toki lengthen 10mins
+	run toki lengthen 10minutes
 	assert_success
-	assert_output 'lengthen 10mins @1'
+	assert_output 'lengthen 10minutes @1'
 
-	run toki shorten 10mins
+	run toki shorten 10minutes
 	assert_success
-	assert_output 'shorten 10mins @1'
+	assert_output 'shorten 10minutes @1'
 
 } # }}}
 
