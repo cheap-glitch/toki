@@ -1,4 +1,5 @@
 #!/usr/bin/env bats
+# shellcheck disable=SC2312
 
 TEST_DIR="$(dirname "${BATS_TEST_FILENAME:-}")"
 
