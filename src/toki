@@ -34,6 +34,7 @@ fi
 if [[ "${1}" == 'help' ]]; then
 	# shellcheck disable=SC2310,SC2311
 	if [[ -z "${2:-}" ]]; then
+		# :nocov:
 		cat <<- END
 			$(timew help || true)
 
@@ -48,6 +49,7 @@ if [[ "${1}" == 'help' ]]; then
 			       timew cut [<date>] [<tag>...]
 			       timew switch [<date>] [<tag>...]
 		END
+		# :nocov:
 	elif custom_command="$(custom_command_exists "${2}")"; then
 		"${custom_command}" --help | "${PAGER:-less}"
 	else
@@ -109,14 +111,17 @@ case "${command}" in tag|untag|lengthen|shorten|delete)
 	done
 	if [[ ${has_interval} -eq 0 ]]; then
 		args+=('@1')
-	fi ;;
+	fi
+	;;
 esac
 
 if [[ -n "${BATS_VERSION:-}" || "$(ps --pid "${PPID}" --format cmd --no-headers || true)" == "${SHELL}" ]]; then
 	timew "${command}" "${args[@]}"
 else
 	# Send a notification when the command fails outside of a terminal
+	# :nocov:
 	if ! output="$(timew "${command}" "${args[@]}" 2>&1)"; then
 		notify-send --expire-time=5000 timew "${output}"
 	fi
+	# :nocov:
 fi

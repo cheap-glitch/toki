@@ -13,6 +13,18 @@ setup() {
 	mkdir "${TIMEWARRIORDB}"
 }
 
+@test "help" { # {{{
+
+	run toki help switch
+	assert_success
+	assert_output --partial 'timew-switch -'
+
+	run toki-switch --help
+	assert_success
+	assert_output --partial 'timew-switch -'
+
+} # }}}
+
 @test "toki-switch" { # {{{
 
 	toki start tag 5minutes ago

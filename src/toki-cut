@@ -4,6 +4,7 @@ shopt -u expand_aliases
 IFS=$'\n\t'
 
 if [[ "${1:-}" == '--help' ]]; then
+	# :nocov:
 	cat <<- END
 	NAME
 	       timew-cut - stop tracking and truncate the stopped interval to the closest minute
@@ -20,6 +21,7 @@ if [[ "${1:-}" == '--help' ]]; then
 	SEE ALSO
 	       timew-stop, timew-cancel
 	END
+	# :nocov:
 	exit 0
 fi
 

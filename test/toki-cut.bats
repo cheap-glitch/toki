@@ -13,6 +13,18 @@ setup() {
 	mkdir "${TIMEWARRIORDB}"
 }
 
+@test "help" { # {{{
+
+	run toki help cut
+	assert_success
+	assert_output --partial 'timew-cut -'
+
+	run toki-cut --help
+	assert_success
+	assert_output --partial 'timew-cut -'
+
+} # }}}
+
 @test "no interval" { # {{{
 
 	run toki cut

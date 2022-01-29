@@ -4,6 +4,7 @@ shopt -u expand_aliases
 IFS=$'\n\t'
 
 if [[ "${1:-}" == '--help' ]]; then
+	# :nocov:
 	cat <<- END
 	NAME
 	       timew-switch - cut the current interval (see timew-cut) and starts another
@@ -17,6 +18,7 @@ if [[ "${1:-}" == '--help' ]]; then
 	SEE ALSO
 	       timew-cut, timew-start, timew-continue
 	END
+	# :nocov:
 	exit 0
 fi
 

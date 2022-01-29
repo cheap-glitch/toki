@@ -4,6 +4,7 @@ shopt -u expand_aliases
 IFS=$'\n\t'
 
 if [[ "${1:-}" == '--help' ]]; then
+	# :nocov:
 	cat <<- END
 	NAME
 	       timew-restore - resume tracking of the last interval and automatically fill the gap
@@ -14,6 +15,7 @@ if [[ "${1:-}" == '--help' ]]; then
 	SEE ALSO
 	       timew-continue, timew-join
 	END
+	# :nocov:
 	exit 0
 fi
 

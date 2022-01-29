@@ -13,6 +13,18 @@ setup() {
 	mkdir "${TIMEWARRIORDB}"
 }
 
+@test "help" { # {{{
+
+	run toki help restore
+	assert_success
+	assert_output --partial 'timew-restore -'
+
+	run toki-restore --help
+	assert_success
+	assert_output --partial 'timew-restore -'
+
+} # }}}
+
 @test "existing interval" { # {{{
 
 	timew start tag >/dev/null

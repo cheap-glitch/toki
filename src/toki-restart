@@ -4,6 +4,7 @@ shopt -u expand_aliases
 IFS=$'\n\t'
 
 if [[ "${1:-}" == '--help' ]]; then
+	# :nocov:
 	cat <<- END
 	NAME
 	       timew-restart - cancel and restart an interval
@@ -18,6 +19,7 @@ if [[ "${1:-}" == '--help' ]]; then
 	SEE ALSO
 	       timew-cancel, timew-stop, timew-continue, timew-start
 	END
+	# :nocov:
 	exit 0
 fi
 

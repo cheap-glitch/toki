@@ -6,21 +6,18 @@ setup() {
 	load ./node_modules/bats-support/load.bash
 	load ./node_modules/bats-assert/load.bash
 
-	PATH="${TEST_DIR}/mock:${PATH}:${TEST_DIR}/../src"
+	PATH="${TEST_DIR}/mocks:${PATH}:${TEST_DIR}/../src"
 }
 
-@test "mock" { # {{{
+@test "mocks" { # {{{
 
-	run toki foo bar baz
+	run toki arg1 arg2 arg3
 	assert_success
-	assert_output 'foo bar baz'
+	assert_output 'arg1 arg2 arg3'
 
-	run toki
+	run timew-foo arg1 arg2 arg3
 	assert_success
-	assert_output - <<- END
-
-		summary :ids
-	END
+	assert_output 'arg1 arg2 arg3'
 
 } # }}}
 
@@ -31,21 +28,24 @@ setup() {
 	assert_line 'Aliases:'
 	assert_line 'Additional commands:'
 
-	run toki help cut
+	run toki help start
 	assert_success
-	assert_output --partial 'timew-cut -'
+	assert_line 'help start'
 
-	run toki help switch
-	assert_success
-	assert_output --partial 'timew-switch -'
+} # }}}
 
-	run toki-cut --help
-	assert_success
-	assert_output --partial 'timew-cut -'
+@test "subcommands" { # {{{
 
-	run toki-switch --help
+	run toki
 	assert_success
-	assert_output --partial 'timew-switch -'
+	assert_output - <<- END
+
+		summary :ids
+	END
+
+	run toki foo arg1 arg2
+	assert_success
+	assert_output 'arg1 arg2'
 
 } # }}}
 
