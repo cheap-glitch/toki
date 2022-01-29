@@ -6,18 +6,21 @@ setup() {
 	load ./node_modules/bats-support/load.bash
 	load ./node_modules/bats-assert/load.bash
 
-	PATH="${TEST_DIR}:${PATH}:${TEST_DIR}/../src"
+	PATH="${TEST_DIR}/mock:${PATH}:${TEST_DIR}/../src"
 }
 
-@test "stub" { # {{{
+@test "mock" { # {{{
 
 	run toki foo bar baz
 	assert_success
 	assert_output 'foo bar baz'
 
-	run toki stop
+	run toki
 	assert_success
-	assert_line 'Recorded tag'
+	assert_output - <<- END
+
+		summary :ids
+	END
 
 } # }}}
 
@@ -155,28 +158,5 @@ setup() {
 	run toki track tag 3h45m26
 	assert_success
 	assert_output 'track tag PT3H45M26S'
-
-} # }}}
-
-@test "toki-cut" { # {{{
-
-	run toki cut
-	assert_success
-	assert_output 'shorten @1 15seconds'
-
-	run toki cut 2m ago
-	assert_success
-	assert_output 'shorten @1 15seconds'
-
-} # }}}
-
-@test "toki-switch" { # {{{
-
-	run toki switch new_tag
-	assert_success
-	assert_output - <<- END
-		cut
-		start new_tag
-	END
 
 } # }}}
