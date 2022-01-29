@@ -12,9 +12,10 @@
  * Extra commands
  * Convenient aliases for built-in commands
  * Extended duration syntax (e.g. `timew track tag for 1h35m20s`)
- * Use `m` as suffix for minutes instead of months
- * Act on the latest interval by default
- * Get notified of errors when running `timew` outside of a terminal
+ * Allows using `m` as suffix for minutes instead of months
+ * Acts on the latest interval by default
+ * Notifies of errors when running `timew` outside of a terminal
+ * Well-tested
 
 ## Installation
 
