@@ -42,7 +42,6 @@ if [[ "${1}" == 'help' ]]; then
 			       shorten: -, reduce
 			       join: merge
 			       track: t, a, add, record
-			       continue: restart
 			       delete: d, remove
 
 			Additional commands:
@@ -94,7 +93,6 @@ case "${args[0]}" in
 	-|reduce)       command='shorten'    ;;
 	merge)          command='join'       ;;
 	t|a|add|record) command='track'      ;;
-	restart)        command='continue'   ;;
 	d|remove)       command='delete'     ;;
 	*)              command="${args[0]}" ;;
 esac

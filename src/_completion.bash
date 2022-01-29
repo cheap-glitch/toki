@@ -38,6 +38,8 @@ week
 
 timew_custom_commands='
 cut
+restart
+restore
 switch
 '
 

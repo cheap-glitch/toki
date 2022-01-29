@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+set -eu -o pipefail
+shopt -u expand_aliases
+IFS=$'\n\t'
+
+if [[ "${1:-}" == '--help' ]]; then
+	cat <<- END
+	NAME
+	       timew-restart - cancel and restart an interval
+
+	SYNOPSIS
+	       timew restart [<date>]
+
+	DESCRIPTION
+	       If there is an open interval, it is abandoned and restarted again at the specified time,
+	       with the same tags.
+
+	SEE ALSO
+	       timew-cancel, timew-stop, timew-continue, timew-start
+	END
+	exit 0
+fi
+
+if [[ $(timew get dom.active || true) -eq 0 ]]; then
+	echo 'There is no active time tracking.'; exit 1
+fi
+
+# shellcheck disable=SC2312
+mapfile -t tags < <(timew get dom.active.json | jq --raw-output '.tags | .[]')
+
+timew cancel && toki start "${tags[@]}" "${@}"

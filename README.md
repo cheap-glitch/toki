@@ -42,6 +42,7 @@ Commands that expect  an ID (`delete`, `tag`, `lengthen`, etc.)  will default to
 ### Extra commands
 
  * `toki-cut`: stop tracking and truncate the stopped interval to the closest minute
+ * `toki-restart`: cancel and restart an interval
  * `toki-switch`: cut the current interval and starts another
 
 See `toki help <command>` for more info.
