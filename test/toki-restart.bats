@@ -24,7 +24,7 @@ setup() {
 
 @test "toki-restart" { # {{{
 
-	toki start foo bar 10minutes ago &>/dev/null
+	toki start foo bar 10minutes ago >/dev/null
 
 	run toki-restart
 	assert_success
@@ -38,7 +38,7 @@ setup() {
 
 @test "toki-restart <date>" { # {{{
 
-	toki start foo bar 10minutes ago &>/dev/null
+	toki start foo bar 10minutes ago >/dev/null
 
 	run toki-restart 30minutes ago
 	assert_success

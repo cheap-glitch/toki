@@ -23,7 +23,7 @@ setup() {
 
 @test "toki-cut" { # {{{
 
-	toki start tag 30.5minutes ago &>/dev/null
+	toki start tag 30.5minutes ago >/dev/null
 
 	run toki cut
 	assert_success
@@ -33,7 +33,7 @@ setup() {
 
 @test "toki-cut <date>" { # {{{
 
-	toki start tag 30.5minutes ago &>/dev/null
+	toki start tag 30.5minutes ago >/dev/null
 
 	run toki cut 2minutes ago
 	assert_success
