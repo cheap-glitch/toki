@@ -115,13 +115,11 @@ case "${command}" in tag|untag|lengthen|shorten|delete)
 	;;
 esac
 
-if [[ -n "${BATS_VERSION:-}" || "$(ps --pid "${PPID}" --format cmd --no-headers || true)" == "${SHELL}" ]]; then
-	timew "${command}" "${args[@]}"
-else
+if [[ "$(ps --pid "${PPID}" --format tty --no-headers || true)" == '?' ]] && ! output="$(timew "${command}" "${args[@]}" 2>&1)"; then
 	# Send a notification when the command fails outside of a terminal
 	# :nocov:
-	if ! output="$(timew "${command}" "${args[@]}" 2>&1)"; then
-		notify-send --expire-time=5000 timew "${output}"
-	fi
+	notify-send --expire-time=5000 timew "${output}"
 	# :nocov:
+else
+	timew "${command}" "${args[@]}"
 fi
