@@ -15,7 +15,7 @@
  * Allows using `m` as suffix for minutes instead of months
  * Acts on the latest interval by default
  * Notifies of errors when running `timew` outside of a terminal
- * Well-tested
+ * Thoroughly tested
 
 ## Installation
 
@@ -29,6 +29,13 @@ and make sure they're executable (`chmod +x <scripts>`).
 The `toki` script can be use in  place of `timew` (one character less to type!).
 Or, if you don't  want to retrain your fingers, you can  alias `timew` to `toki`
 and get all of its benefits transparently.
+
+### External dependencies
+
+The `toki-restart` commands uses `jq` to parse JSON, so you need to
+[install `jq`](https://stedolan.github.io/jq/download) if you want to use it.
+
+### Completion
 
 Source `_completion.bash` in your `bashrc` to enable better completion.
 
