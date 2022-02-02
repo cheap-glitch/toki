@@ -115,10 +115,12 @@ case "${command}" in tag|untag|lengthen|shorten|delete)
 	;;
 esac
 
-if [[ "$(ps --pid "${PPID}" --format tty --no-headers || true)" == '?' ]] && ! output="$(timew "${command}" "${args[@]}" 2>&1)"; then
-	# Send a notification when the command fails outside of a terminal
+# Send a notification when the command fails outside of a terminal
+if [[ "$(ps --pid "${PPID}" --format tty --no-headers || true)" == '?' ]]; then
 	# :nocov:
-	notify-send --expire-time=5000 timew "${output}"
+	if ! output="$(timew "${command}" "${args[@]}" 2>&1)"; then
+		notify-send --expire-time=5000 timew "${output}"
+	fi
 	# :nocov:
 else
 	timew "${command}" "${args[@]}"
