@@ -38,8 +38,8 @@ setup() {
 	toki start tag 30.5minutes ago >/dev/null
 
 	run toki cut
-	assert_success
 	assert_equal "$(timew get dom.tracked.1.duration)" PT30M
+	assert_success
 
 } # }}}
 
@@ -48,7 +48,7 @@ setup() {
 	toki start tag 30.5minutes ago >/dev/null
 
 	run toki cut 2minutes ago
-	assert_success
 	assert_equal "$(timew get dom.tracked.1.duration)" PT28M
+	assert_success
 
 } # }}}

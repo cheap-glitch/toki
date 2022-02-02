@@ -41,10 +41,10 @@ setup() {
 	timew shorten @1 5minutes >/dev/null
 
 	run toki-restore
-	assert_success
 	assert_equal "$(timew get dom.active.duration)" PT10M
 	assert_equal "$(timew get dom.active.tag.1)" bar
 	assert_equal "$(timew get dom.active.tag.2)" foo
 	assert_line 'Tracking bar foo'
+	assert_success
 
 } # }}}
