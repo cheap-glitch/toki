@@ -52,3 +52,13 @@ setup() {
 	assert_success
 
 } # }}}
+
+@test "interval duration with no minutes" { # {{{
+
+	toki start tag PT1H30S ago >/dev/null
+
+	run toki cut
+	assert_equal "$(timew get dom.tracked.1.duration)" PT1H
+	assert_success
+
+} # }}}
