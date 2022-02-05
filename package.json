@@ -2,7 +2,7 @@
   "private": true,
   "name": "toki",
   "description": "A Bash wrapper around the Timewarrior CLI that aims to improve its usability.",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "license": "ISC",
   "author": "cheap glitch <cheap.glitch@gmail.com> (https://github.com/cheap-glitch)",
   "engines": {
